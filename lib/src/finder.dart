@@ -49,9 +49,19 @@ class _ArchiveReader implements ArchiveReader {
     return listFiles().where((f) => p.isWithin(path, f));
   }
 
+  // Hack, tries to ignore special './' directories that appear sometimes.
+  List<int> _findFile(String path) {
+    for (final file in _archive) {
+      if (file.name.endsWith(path)) {
+        return file.content as List<int>;
+      }
+    }
+    return null;
+  }
+
   @override
   String readAsString(String path, {Encoding encoding: UTF8}) {
-    final List<int> content = _archive.findFile(path)?.content;
+    final content = _findFile(path);
     if (content == null) {
       throw new ArgumentError('No file "$path" found in archive');
     }
