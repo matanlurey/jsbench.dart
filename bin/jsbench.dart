@@ -12,6 +12,8 @@ import 'package:path/path.dart' as p;
 import 'package:jsbench/src/finder.dart';
 import 'package:jsbench/src/output.dart';
 
+const _nameLength = 80;
+
 Future<Null> main(List<String> args) async {
   final results = _parser.parse(args);
   if (results['version'] == true) {
@@ -44,7 +46,7 @@ Future<Null> main(List<String> args) async {
       buffer
         ..write(' | ')
         ..write(f1)
-        ..write(' ' * (40 - f1.length))
+        ..write(' ' * (_nameLength - f1.length))
         ..write(' | ')
         ..write(f2)
         ..write(' ' * (10 - f2.length))
@@ -55,7 +57,7 @@ Future<Null> main(List<String> args) async {
     }
 
     void writeSeparator() {
-      writeRow('-' * 40, '-' * 10, '-' * 10);
+      writeRow('-' * _nameLength, '-' * 10, '-' * 10);
     }
 
     final proxy = new _FileProxy(path, finder);
