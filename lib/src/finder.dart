@@ -38,6 +38,8 @@ class _ArchiveReader implements ArchiveReader {
       return _listFilesIn(path);
     }
     return _archive
+        // Exclude symlinks.
+        .where((f) => f.isFile)
         .map((f) => f.name)
         // Ignore special classes of OS-dependent files we don't care about.
         .where((f) => !f.startsWith('./._'));
