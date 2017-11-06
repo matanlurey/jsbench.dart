@@ -51,7 +51,10 @@ class _ArchiveReader implements ArchiveReader {
 
   @override
   String readAsString(String path, {Encoding encoding: UTF8}) {
-    final List<int> content = _archive.findFile(path).content;
+    final List<int> content = _archive.findFile(path)?.content;
+    if (content == null) {
+      return '';
+    }
     return encoding.decode(content);
   }
 }
