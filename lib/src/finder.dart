@@ -52,7 +52,7 @@ class _ArchiveReader implements ArchiveReader {
   // Hack, tries to ignore special './' directories that appear sometimes.
   List<int> _findFile(String path) {
     for (final file in _archive) {
-      if (file.name.endsWith(path)) {
+      if (file.name.endsWith(path) && !file.name.startsWith('./._')) {
         return file.content as List<int>;
       }
     }
