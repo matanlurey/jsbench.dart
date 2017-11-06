@@ -53,7 +53,7 @@ class _ArchiveReader implements ArchiveReader {
   String readAsString(String path, {Encoding encoding: UTF8}) {
     final List<int> content = _archive.findFile(path)?.content;
     if (content == null) {
-      return '';
+      throw new ArgumentError('No file "$path" found in archive');
     }
     return encoding.decode(content);
   }
