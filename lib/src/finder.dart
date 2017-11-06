@@ -128,6 +128,7 @@ class FileFinder {
   /// **NOTE**: If [archives] was supplied, some files do not exist on disk.
   Iterable<String> find() sync* {
     for (final file in _findIncludes()) {
+      print('>>> include: ${file.path}');
       if (_isArchive(file.path)) {
         yield* _findArchived(file.path)
             .where((path) => !_isArchive(path))

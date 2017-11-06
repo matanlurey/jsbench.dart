@@ -38,7 +38,6 @@ Future<Null> main(List<String> args) async {
   }
   final checkDumpInfo = results['dump'] != false;
   for (final path in inputs) {
-    print('>>> $path');
     final buffer = new StringBuffer();
 
     void writeRow(String f1, [String f2 = '', String f3 = '']) {
