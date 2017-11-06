@@ -108,7 +108,10 @@ class FileFinder {
 
   bool _isArchive(String path) => archives.any((a) => a.isFormat(path));
 
-  bool _isInput(String path) => include.any((g) => g.matches(path));
+  bool _isInput(String path) {
+    print('>>> _isInput($path)');
+    return include.any((g) => g.matches(path));
+  }
 
   bool _isNotExcluded(String path) => !exclude.any((g) => g.matches(path));
 
@@ -128,7 +131,6 @@ class FileFinder {
   /// **NOTE**: If [archives] was supplied, some files do not exist on disk.
   Iterable<String> find() sync* {
     for (final file in _findIncludes()) {
-      print('>>> include: ${file.path}');
       if (_isArchive(file.path)) {
         yield* _findArchived(file.path)
             .where((path) => !_isArchive(path))
