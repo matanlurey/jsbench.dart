@@ -113,10 +113,7 @@ class FileFinder {
 
   bool _isArchive(String path) => archives.any((a) => a.isFormat(path));
 
-  bool _isInput(String path) {
-    print('>>> _isInput($path)');
-    return include.any((g) => g.matches(path));
-  }
+  bool _isInput(String path) => include.any((g) => g.matches(path));
 
   bool _isNotExcluded(String path) => !exclude.any((g) => g.matches(path));
 
@@ -140,7 +137,11 @@ class FileFinder {
         yield* _findArchived(file.path)
             .where((path) => !_isArchive(path))
             .map((path) => p.join(file.path, path).replaceAll('/./', '/'))
-            .where(_isInput);
+            .where(_isInput)
+            .map((p) {
+          print('>> $p');
+          return p;
+        })
       } else {
         yield file.path;
       }
