@@ -141,7 +141,7 @@ class FileFinder {
             .map((p) {
           print('>> $p');
           return p;
-        })
+        });
       } else {
         yield file.path;
       }
