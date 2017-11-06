@@ -68,3 +68,6 @@ If you want _more_ information check out [`dump-info-visualizer`][dump-site].
 `--input`: Glob pattern(s) to find emitted JavaScript files.
 
 `--exclude` Glob pattern(s) to exclude when finding inputs.
+
+`--archive`: Archive formats to recursively read from when finding inputs. Only
+`tar` is currently supported.

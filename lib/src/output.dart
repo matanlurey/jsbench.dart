@@ -3,13 +3,20 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:kilobyte/kilobyte.dart';
 
+abstract class FileProxy {
+  FileProxy relative(String relative);
+  bool exists();
+  String get path;
+  int get size;
+  String readAsStringSync();
+}
+
 class JsOutput {
   /// The `.dart.js` file on disk.
-  final File file;
+  final FileProxy file;
 
   // Cached attributes.
   bool _hasDumpFile;
@@ -23,12 +30,12 @@ class JsOutput {
   @override
   int get hashCode => file.path.hashCode;
 
-  File get _dumpFile => new File('${file.path}.info.json');
+  FileProxy get _dumpFile => file.relative('${file.path}.info.json');
 
   /// Whether a `{file}.info.json` file exists relative to [file].
   ///
   /// If `true`, may use [readDump].
-  bool get hasDumpFile => _hasDumpFile ??= _dumpFile.existsSync();
+  bool get hasDumpFile => _hasDumpFile ??= _dumpFile.exists();
 
   /// Reads the `.info.json` file from disk.
   JsOutputDump readDump() {
@@ -52,7 +59,7 @@ class JsOutput {
   }
 
   /// Total size of the [file] on disk.
-  Size get size => _size ??= new Size(bytes: file.statSync().size);
+  Size get size => _size ??= new Size(bytes: file.size);
 
   @override
   String toString() => 'JsOutput {${file.path}}';
