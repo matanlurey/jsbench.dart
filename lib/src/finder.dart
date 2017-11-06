@@ -147,11 +147,7 @@ class FileFinder {
         yield* _findArchived(file.path)
             .where((path) => !_isArchive(path))
             .map((path) => p.join(file.path, path).replaceAll('/./', '/'))
-            .where(_isInput)
-            .map((p) {
-          print('>> $p');
-          return p;
-        });
+            .where(_isInput);
       } else {
         yield file.path;
       }
